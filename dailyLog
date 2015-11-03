@@ -67,7 +67,7 @@ public class DailyLog implements ActionListener
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				createFile();
+				//createFile();
 			}
 		});
 		j2.setSize(225,200);
@@ -78,6 +78,7 @@ public class DailyLog implements ActionListener
 		
 	}
 	
+	/*
 	//this will create a file
 	private void createFile()
 	{
@@ -91,6 +92,7 @@ public class DailyLog implements ActionListener
 			System.out.println("error: "+e );
 		}
 	}
+	*/
 	
 	//this prompts user to input their daily logs
 	private void promptUser(){
@@ -159,7 +161,7 @@ public class DailyLog implements ActionListener
 	public static void main(String[] args)
 	{
 		DailyLog b = new DailyLog();
-		b.promptUser();
+		//b.promptUser();
 	}
 	
 
