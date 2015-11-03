@@ -1,1 +1,169 @@
+//imports
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+/**
+ * Author: Mark Szewczuk
+ * Date: Oct 23, 2015
+ * Description: Code will hopefully end up being run through a .jar file which will prompt me with a 
+ * 				daily log dialogue box, and will ask me to input a journal entry.  Then it will export 
+ * 				it to a text file which will show the date and the inputted daily entry from that date.
+ **/
+
+public class DailyLog implements ActionListener 
+{
+	//prompt user interface
+	private JFrame j = new JFrame();
+	private JPanel p = new JPanel();
+	private JTextField desc = new JTextField(15);
+	private JLabel descLabel = new JLabel("Description");
+	private JLabel dayLabel = new JLabel("Day of Learning Module");
+	private JTextField dayLM = new JTextField(15);
+	private JButton jby = new JButton("Confirm");
+	private JButton jbc = new JButton("Cancel");
+	
+	//user interface to create a file
+	private JFrame j2 = new JFrame();
+	private JPanel p2 = new JPanel();
+	private JTextField fileText = new JTextField(15);
+	private JLabel fileTextLabel = new JLabel("File Name (ex: filename)");
+	private JTextField fileLoc = new JTextField(15);
+	private JLabel fileLocDesc = new JLabel("Location (ex: c:/some/directory/file.txt)");
+	private JButton jbDone = new JButton("Continue");
+	private JButton jbCancel = new JButton("Cancel");
+	
+	
+	//this will create a log file for a user to use
+	private void createLogFile()
+	{
+		p2.setSize(225,200);
+		p2.add(fileTextLabel);
+		p2.add(fileText);
+		p2.add(fileLocDesc);
+		p2.add(fileLoc);
+		p2.add(jbDone);
+		p2.add(jbCancel);
+		jbCancel.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				j2.dispose();
+			}
+		});
+		jbDone.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				createFile();
+			}
+		});
+		j2.setSize(225,200);
+		j2.add(p2);
+		j2.setResizable(false);
+		j2.setLocationRelativeTo(null);
+		j2.setVisible(true);
+		
+	}
+	
+	//this will create a file
+	private void createFile()
+	{
+		try
+		{
+			
+			
+		}
+		catch(Exception e)
+		{
+			System.out.println("error: "+e );
+		}
+	}
+	
+	//this prompts user to input their daily logs
+	private void promptUser(){
+		p.setSize(200, 200);
+		p.add(dayLabel);
+		p.add(dayLM);
+		p.add(descLabel);
+		p.add(desc);
+		p.add(jby);
+		p.add(jbc);
+		jbc.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				j.dispose();	
+			}
+		});
+		jby.addActionListener(new ActionListener(){
+			
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+					saveAndClose();
+			}
+		});
+		j.setSize(200, 200);	
+		j.add(p);
+		j.setResizable(false);
+		j.setLocationRelativeTo(null);
+		j.setVisible(true);
+	}
+
+	//Called when user confirms to save their data, saves written data to file
+	private void saveAndClose() 
+	{
+		try
+		{
+			File file = new File("c:/dailylog.txt");
+			if(!file.exists())
+			{
+				file.createNewFile();
+			}		
+			String day = dayLM.getText();
+			String text = desc.getText();
+			FileWriter fw = new FileWriter(file.getAbsoluteFile(),true);
+			BufferedWriter out = new BufferedWriter(fw);
+			out.write("\r\n"+"Day "+day+": "+text);
+			out.close();
+		} 
+		catch (IOException e)
+		{
+			System.out.println("Error: "+e);
+			e.printStackTrace();
+		}
+		j.dispose();
+
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent arg0)
+	{
+		
+	}
+	
+	public static void main(String[] args)
+	{
+		DailyLog b = new DailyLog();
+		b.promptUser();
+	}
+	
+
+	
+	
+
+}
